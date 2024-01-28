@@ -23,15 +23,15 @@ const binary_1 = require("./binary");
                 list: [1, 2],
                 target: 1,
             },
-            expected: 1,
+            expected: { numberOfGuesses: 1, targetFound: true },
         },
         {
             name: 'binary search where log n === 4',
             input: {
                 list: [1, 2, 3, 4],
-                target: 4,
+                target: 3,
             },
-            expected: 2,
+            expected: { numberOfGuesses: 2, targetFound: true },
         },
         {
             name: 'binary search where log n === 8',
@@ -39,7 +39,7 @@ const binary_1 = require("./binary");
                 list: [1, 2, 3, 4, 5, 6, 7, 8],
                 target: 7,
             },
-            expected: 3,
+            expected: { numberOfGuesses: 3, targetFound: true },
         },
         {
             name: 'binary search where log n === 16',
@@ -47,14 +47,22 @@ const binary_1 = require("./binary");
                 list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
                 target: 13,
             },
-            expected: 4,
+            expected: { numberOfGuesses: 4, targetFound: true },
+        },
+        {
+            name: 'binary search where number is not in list',
+            input: {
+                list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
+                target: 17,
+            },
+            expected: { numberOfGuesses: 5, targetFound: false },
         },
     ];
     for (let i = 0; i < testCases.length; i++) {
         const { name, input, expected } = testCases[i];
         yield t.test(name, () => {
             const searchResult = (0, binary_1.binarySearch)(input.list, input.target);
-            node_assert_1.default.strictEqual(searchResult, expected);
+            node_assert_1.default.deepEqual(searchResult, expected);
         });
     }
 }));
